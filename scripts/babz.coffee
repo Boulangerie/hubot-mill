@@ -1,56 +1,77 @@
-# Description 
-# Setting up fussball teams 
 
-maxplayers = 4
-shuffle = (a) -> a.sort -> 0.5 - Math.random()
-Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
-playersAreReady = (players) -> (maxplayers - players.length) <= 0
-startGame = (message, robot) ->
-  randomized_players = shuffle(robot.brain.data.players)
-  message.send ":soccer: :large_blue_circle: @#{randomized_players[0]} & @#{randomized_players[1]} :red_circle: @#{randomized_players[2]} & @#{randomized_players[3]}"
-  robot.brain.data.players = []
+# Description
+#   Add users to a foosball match.
+#
+# Commands:
+#   foos me - Add a player.
+#   foos @nick - Add @nick as a player.
+#   foos remove - Remove a player.
+#   foos clear - Remove everyone.
+#   foos show - Show players.
+#   foos table - Show a picture of the foosball table.
+#
+# Dependencies:
+#   lodash
+#
+# Configuration:
+#   HUBOT_FOOS_TABLE
+#
+# Author:
+#   thorsteinsson
+
+_ = require('lodash')
 
 module.exports = (robot) ->
-  robot.brain.data.players = []
+  maxLength = 4
+  robot.brain.data.foos ?= {}
 
-  robot.hear /^(babz)\s?(.*)/i, (msg) ->
-    sender = msg.message.user.name
-    command = msg.match[2].split(" ")[0]
-    if (command is "")
-      if (robot.brain.data.players.length is 0)
-        robot.brain.data.players.push sender
-        msg.send ":soccer: #{robot.brain.data.players[0]} wants to play. Anyone else wants to play foosball?"
-      else
-        if (sender in robot.brain.data.players)
-          msg.send ":soccer: #{sender} REALLY wants to play. #{maxplayers - robot.brain.data.players.length} More needed"
-        else
-          robot.brain.data.players.push sender
-          if (playersAreReady(robot.brain.data.players))
-            startGame(msg, robot)
-          else
-            msg.send ":soccer: #{sender} is game! #{maxplayers - robot.brain.data.players.length} more needed"
+  getRoom = (msg) ->
+    msg.message.user.room ? 'default'
+
+  init = (msg) ->
+    room = getRoom msg
+    if !robot.brain.data.foos[room]
+      robot.brain.data.foos[room] = []
+
+  showLineup = (msg) ->
+    room = getRoom(msg)
+    players = robot.brain.data.foos[room]
+    if players.length == 0
+      msg.send 'No foos players.'
     else
-      switch command
-        when "queue", "kø"
-          msg.send ":soccer: #{robot.brain.data.players.join(', ')} wants to play. #{maxplayers - robot.brain.data.players.length} more needed"
-        when "remove", "fjern"
-          message = msg.match[2]
-          commandData = if message.indexOf(' ') is -1 then '' else message.substring(message.indexOf(' ') + 1)
-          if(commandData.length is 0)
-            sender = msg.message.user.name
-            robot.brain.data.players.remove(sender)
-          else
-            sender = commandData
-            robot.brain.data.players.remove(sender)
+      msg.send 'Foos players: ' + players.join(' - ')
 
-          msg.send ":soccer: #{sender} is a chicken. #{maxplayers - robot.brain.data.players.length} More needed"
-        when "players"
-          commandData = msg.match[2].substring(msg.match[2].indexOf(' ') + 1)
-          players = commandData.split(",")
-          robot.brain.data.players.push player.trim() for player in players
-          if (playersAreReady(robot.brain.data.players))
-            startGame(msg, robot)
-          else
-            msg.send ":soccer: #{robot.brain.data.players.join(', ')} wants to play. #{maxplayers - robot.brain.data.players.length} more needed"
-        else
-          msg.send "#{command} is an unknown command"
+  addPlayer = (msg, nick) ->
+    init msg
+    players = robot.brain.data.foos[getRoom(msg)]
+    players.push(nick)
+    showLineup msg
+    if players.length == maxLength - 1
+      msg.send 'One more player needed!'
+    else if players.length == maxLength
+      msg.send 'Go go go!'
+      robot.brain.data.foos[getRoom(msg)] = []
+
+  robot.hear /foos\sme/i, (msg) ->
+    addPlayer(msg, '@' + msg.message.user.mention_name)
+
+  robot.hear /foos\s(@.*)/i, (msg) ->
+    addPlayer(msg, msg.match[1])
+
+  robot.hear /foos\sremove/i, (msg) ->
+    init msg
+    room = getRoom(msg)
+    player = '@' + msg.message.user.mention_name
+    robot.brain.data.foos[room] = _.without(robot.brain.data.foos[room], player)
+    showLineup msg
+
+  robot.hear /foos\sclear/i, (msg) ->
+    robot.brain.data.foos[getRoom(msg)] = []
+    showLineup msg
+
+  robot.hear /foos\sshow/i, (msg) ->
+    init msg
+    showLineup msg
+
+  robot.hear /foos\stable/i, (msg) ->
+    msg.send process.env.HUBOT_FOOS_TABLE

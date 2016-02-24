@@ -10,12 +10,6 @@
 
 module.exports = (robot) ->
 
-#  robot.hear /salut/i, (res) ->
-#   res.send "Bijour :)"
-  robot.respond /salut/i, (res) ->
-    res.reply "Bijour toi!"
-
-
 #  obe=0
 
 #  robot.hear /obé\?/i, (res) ->
@@ -27,31 +21,31 @@ module.exports = (robot) ->
 #        clearInterval(obeInt)
 #    , 3000)
 
-  babz = 0
-  players = []
-
-  robot.hear /babz/i, (res) ->
-
-    if(players.indexOf(res.message.user.name) == -1)
-      players.push(res.message.user.name)
-      babz++
-
-      if(babz == 4)
-        player1 = players.splice(Math.floor(Math.random() * 4), 1)[0]
-        player2 = players.splice(Math.floor(Math.random() * 3), 1)[0]
-        player3 = players.splice(Math.floor(Math.random() * 2), 1)[0]
-        player4 = players.splice(Math.floor(Math.random() * 1), 1)[0]
-
-        babz = 0
-        res.send players
-        res.send "GO BABZ !!"
-        res.send player1 + "/" + player2 + " VS " + player3 + "/" + player4
-      else
-        res.send "Players : " + players.toString()
-        res.send "Need " + (4 - babz) + " players!"
-
-    else
-      res.send "Déjà présent connard !"
+#  babz = 0
+#  players = []
+#
+#  robot.hear /babz/i, (res) ->
+#
+#    if(players.indexOf(res.message.user.name) == -1)
+#      players.push(res.message.user.name)
+#      babz++#
+#
+#      if(babz == 4)
+#        player1 = players.splice(Math.floor(Math.random() * 4), 1)[0]
+#        player2 = players.splice(Math.floor(Math.random() * 3), 1)[0]
+#        player3 = players.splice(Math.floor(Math.random() * 2), 1)[0]
+#        player4 = players.splice(Math.floor(Math.random() * 1), 1)[0]
+#
+#        babz = 0
+#        res.send players
+#        res.send "GO BABZ !!"
+#        res.send player1 + "/" + player2 + " VS " + player3 + "/" + player4
+#      else
+#        res.send "Players : " + players.toString()
+#        res.send "Need " + (4 - babz) + " players!"
+#
+#    else
+#      res.send "Déjà présent connard !"
 
 # robot.hear /badger/i, (res) ->
 #   res.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
