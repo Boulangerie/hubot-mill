@@ -12,6 +12,8 @@ getRandomItem = (items) => items[Math.floor(Math.random()*items.length)]
 
 module.exports = (robot) ->
 
+  robot.messageRoom "general", "Hubot is back !!!!!! :banana:"
+
   responses = [
     "uk:Hello!"
     "ua:Dobriy den!"
@@ -47,6 +49,9 @@ module.exports = (robot) ->
     "tr:Merhaba"
   ]
 
-  robot.hear /(yo|coucou|hello|salut|hey)/i, (res) ->
+  robot.hear /(yo|coucou|hello|salut|hey|bonjour)/i, (res) ->
     randomResponse = getRandomItem(responses).split(':')
     res.reply ":flag-" + randomResponse[0] + ": " + randomResponse[1]
+
+  robot.hear /(bichour)/i, (res) ->
+    res.reply "Bichour toi"
