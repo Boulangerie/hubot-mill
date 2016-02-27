@@ -1,4 +1,5 @@
 [
   "auto-stache.coffee",
-  "yoda-pictures.coffee"
+  "yoda-pictures.coffee",
+  "travis.coffee"
 ]
