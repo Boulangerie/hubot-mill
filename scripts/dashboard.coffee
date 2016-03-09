@@ -36,6 +36,20 @@ class Dashboard
         @robot.brain.data.dashboard.sumologic.dashboards = dashboards
         done(@robot.brain.data.dashboard.sumologic.dashboards)
 
+  getSumologicDashboardData: (dashId) ->
+#    @robot.http("https://api.sumologic.com/api/v1/dashboards/"+dashId+"/data")
+    console.log dashId
+    @robot.http("https://api.sumologic.com/api/v1/dashboards/"+dashId)
+      .header('Authorization', 'Basic ' + Dashboard.SumologicToken)
+      .get() (err, res, body) =>
+#        dashboardData = JSON.parse(body).dashboardMonitorDatas
+        dashboardData = JSON.parse(body)
+        console.log JSON.stringify(dashboardData, null, 4)
+#        @robot.brain.data.dashboard.sumologic.lastUpdate = (new Date).getTime()
+#        @robot.brain.data.dashboard.sumologic.dashboards = dashboards
+#        done(@robot.brain.data.dashboard.sumologic.dashboards)
+#        done('Awesome I did the job !');
+
 
 Util = require "util"
 _ = require "lodash"
@@ -81,6 +95,10 @@ module.exports = (robot) ->
 
     else if key in ["set"]
       msg.send(dashboard.setCurrentUrl(value))
+
+    else if key in ["plop"]
+      dashboard.getSumologicDashboardData(value)
+      msg.send('Awesome !')
 
     else if key in ["sumo"]
       dashboard.setCurrentUrl(Dashboard.getSumoURLById(value))
