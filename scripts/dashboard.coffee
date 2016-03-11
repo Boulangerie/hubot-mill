@@ -37,18 +37,18 @@ class Dashboard
         done(@robot.brain.data.dashboard.sumologic.dashboards)
 
   getSumologicDashboardData: (dashId) ->
-#    @robot.http("https://api.sumologic.com/api/v1/dashboards/"+dashId+"/data")
-    console.log dashId
+    @robot.http("https://api.sumologic.com/api/v1/dashboards/"+dashId+"/data")
+      .header('Authorization', 'Basic ' + Dashboard.SumologicToken)
+      .get() (err, res, body) =>
+        dashboardData = JSON.parse(body).dashboardMonitorDatas
+        console.log JSON.stringify(dashboardData, null, 4)
+
+  getSumologicDashboardInfo: (dashId) ->
     @robot.http("https://api.sumologic.com/api/v1/dashboards/"+dashId)
       .header('Authorization', 'Basic ' + Dashboard.SumologicToken)
       .get() (err, res, body) =>
-#        dashboardData = JSON.parse(body).dashboardMonitorDatas
-        dashboardData = JSON.parse(body)
-        console.log JSON.stringify(dashboardData, null, 4)
-#        @robot.brain.data.dashboard.sumologic.lastUpdate = (new Date).getTime()
-#        @robot.brain.data.dashboard.sumologic.dashboards = dashboards
-#        done(@robot.brain.data.dashboard.sumologic.dashboards)
-#        done('Awesome I did the job !');
+        dashboardInfo = JSON.parse(body).dashboard
+        console.log JSON.stringify(dashboardInfo, null, 4)
 
 
 Util = require "util"
@@ -63,6 +63,7 @@ module.exports = (robot) ->
                 Dashboard URL manager
                 `!dashboard set <url>` : Switch to given URL
                 `!dashboard sumo <dashboardId>` : Switch to the dashboardId URL
+                `!dashboard show <dashboardId>-<widgetId>` : Get picture of a widget
                 `!dashboard [-c|--current]` : Display current URL
                 `!dashboard [-l|--list]` : List sumologic dashboard
                 `!dashboard [-d|--default]` : Set default dashboard
@@ -96,9 +97,14 @@ module.exports = (robot) ->
     else if key in ["set"]
       msg.send(dashboard.setCurrentUrl(value))
 
-    else if key in ["plop"]
+    else if key in ["info"]
+      dashboard.getSumologicDashboardInfo(value)
+
+    else if key in ["data"]
       dashboard.getSumologicDashboardData(value)
-      msg.send('Awesome !')
+
+    else if key in ["show"]
+      new WidgetDisplay(value).show()
 
     else if key in ["sumo"]
       dashboard.setCurrentUrl(Dashboard.getSumoURLById(value))
@@ -136,3 +142,15 @@ module.exports = (robot) ->
       url: dashboard.getCurrentUrl(),
       history: dashboard.getHistory()
     })
+
+
+class WidgetDisplay
+  constructor: (@widgetKey) ->
+    [@dashboardId, @widgetId] = @widgetKey.split('-')
+
+  show: () ->
+    console.log "This is the widget #{@widgetId} from dashboard #{@dashboardId}"
+
+  fetch: () ->
+    console.log "I will fetch something from sumo"
+
