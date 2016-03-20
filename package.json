@@ -1,7 +1,10 @@
 {
-  "name": "hubot",
+  "name": "hubot-mill",
   "version": "0.0.0",
-  "description": "A simple helpful robot for your Company",
+  "description": "Our cool dear hubot which help us to make good things at Boulangerie",
+  "scripts": {
+    "dev": "./bin/hubot"
+  },
   "dependencies": {
     "gitio2": "^3.1.0",
     "hubot": "^2.18.0",
