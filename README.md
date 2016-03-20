@@ -212,3 +212,55 @@ Add the subdomain hubot should connect to. If you web URL looks like
 
 You may want to get comfortable with `heroku logs` and `heroku restart` if
 you're having issues.
+
+
+# (Payou - Experiments) Display a widget from sumologic
+
+## Idea
+
+From a Sumologic dashboard widget, be able to display it as an image
+
+## How
+
+Step one : Target the good widget
+For now we can't do it easily while the dashboard API from Sumologic is broken.
+For now we should link manually id to widget :cry:
+
+Step two : Transform widget data to graph
+
+Thanks to jsdom and highcharts we can transform what sumologic return to a graph.
+This process will be manual in a first time for testing purpose, then a bit 
+industrialize to display all widget possible. Sumologic seems to use highcharts 
+for rendering their widget, so this part shouldn't be hard...
+
+Step three : Transform svg graph to image
+
+For now we will use svg2png, it use phamtomjs in background for extract png from
+svg. Not the nicer solution but the easiest for now. Other lib are only wrapper 
+of lower image libs. Maybe this latest solution is faster than the previous and 
+we should consider it on long term maybe. But this one is harder to implement and
+depend on which OS the hubot will run.
+
+Step Four : Host/Send the img to slack
+
+At first sight, Hubot should send image generated.
+Not the hardest part, seems slack api have what we need to do it !
+We just need to implement that part and we should be done !
+
+Could send it to a third part and just send link in a channel to.
+
+## usefull commands
+
+```
+// Will launch the test bouzin !
+coffee ./scripts/hubot-sumologic-image-widget/main.coffee
+
+// Will launch the gist test bouzin !
+node ./scripts/hubot-sumologic-image-widget/gist.js
+```
+
+## At dev end
+
+- [ ] Remove dev npm scripts
+- [ ] Remove tests files
+- [ ] Consider to package it 
