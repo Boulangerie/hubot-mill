@@ -1,3 +1,7 @@
+Util = require "util"
+_ = require "lodash"
+getRandomItem = (items) => items[Math.floor(Math.random()*items.length)]
+
 # Description:
 #   Example scripts for you to examine and try out.
 #
@@ -51,9 +55,17 @@ class Dashboard
         console.log JSON.stringify(dashboardInfo, null, 4)
 
 
-Util = require "util"
-_ = require "lodash"
-getRandomItem = (items) => items[Math.floor(Math.random()*items.length)]
+class WidgetDisplay
+  constructor: (@robot, widgetKey) ->
+    [@dashboardId, @widgetId] = @widgetKey.split('-')
+
+  show: () ->
+    console.log "This is the widget #{@widgetId} from dashboard #{@dashboardId}"
+
+  fetch: () ->
+    console.log "I will fetch something from sumo"
+
+
 
 module.exports = (robot) ->
 
@@ -142,15 +154,4 @@ module.exports = (robot) ->
       url: dashboard.getCurrentUrl(),
       history: dashboard.getHistory()
     })
-
-
-class WidgetDisplay
-  constructor: (@widgetKey) ->
-    [@dashboardId, @widgetId] = @widgetKey.split('-')
-
-  show: () ->
-    console.log "This is the widget #{@widgetId} from dashboard #{@dashboardId}"
-
-  fetch: () ->
-    console.log "I will fetch something from sumo"
 
