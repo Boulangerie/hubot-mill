@@ -1,0 +1,17 @@
+{
+  "front-APIV1-error": {
+    "dashboardId" : 11113109,
+    "widgetId" : 11116785,
+    "type" : "stackedBar"
+  },
+  "front-APIV2-error": {
+    "dashboardId" : 11113109,
+    "widgetId" : 11116794,
+    "type" : "stackedBar"
+  },
+  "front-format-version": {
+    "dashboardId" : 11113109,
+    "widgetId" : 11116794,
+    "type" : "pie"
+  }
+}

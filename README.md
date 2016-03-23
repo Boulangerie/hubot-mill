@@ -259,6 +259,18 @@ coffee ./scripts/hubot-sumologic-image-widget/main.coffee
 node ./scripts/hubot-sumologic-image-widget/gist.js
 ```
 
+## Now
+
+- [x] Tests the all chain !
+- [ ] Use real data from sumologic widget
+- [ ] Implement some highchart adapters depending of widget
+- [ ] Refactor a lot
+- [ ] Clean generated image file
+- [ ] Use promises correctly
+- [ ] Add Hubot hear for this dev
+- [ ] Test on a true slack
+- [ ] Clean it !
+
 ## At dev end
 
 - [ ] Remove dev npm scripts
