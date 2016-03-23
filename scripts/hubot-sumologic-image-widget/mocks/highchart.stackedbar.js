@@ -27,7 +27,8 @@ $(function () {
     },
     // For building series seems, Build an array for each fields[].keyField:false
     // On each point, x should be keyField:true and y the value, then push to field array
-    series: [{        //For each fields[].keyField:false
+    series: [
+      {        //For each fields[].keyField:false
       name: '404',
       data: [{
         x: 1458510720000,   //Directly usage from sumodata (ms)
@@ -45,7 +46,8 @@ $(function () {
         x: 1458511320000,
         y: 6
       }]
-    }, {
+    },
+      {
       name: '403',
       data: [{
         x: 1458510720000,
@@ -57,6 +59,7 @@ $(function () {
         x: 1458511320000,
         y: 1
       }]
-    }]
+    }
+    ]
   });
 });

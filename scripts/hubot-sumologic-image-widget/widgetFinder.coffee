@@ -19,7 +19,7 @@ class WidgetFinder
         dashboardData = JSON.parse(body).dashboardMonitorDatas
         widgetData = _.find(dashboardData, {'id': @config.widgetId})
         if(!_.isUndefined(widgetData))
-          graph = new GraphBuilder(widgetData)
+          graph = new GraphBuilder(@name, @config, widgetData)
           graph.generateChart()
 
 module.exports = WidgetFinder

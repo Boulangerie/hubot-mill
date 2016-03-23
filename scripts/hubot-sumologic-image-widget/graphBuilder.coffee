@@ -4,13 +4,16 @@ svg2png                     = require 'svg2png'
 pnfs                        = require 'pn/fs'
 createElementNSForHighchart = require './createElementNSForHighchart'
 sendToSlack                 = require './sendToSlack'
+StackedBarFormatter         = require './graph-formatters/stackedBarFormatter'
 
 class GraphBuilder
-  constructor: (@widgetData) ->
+  constructor: (@config, @widgetData) ->
     @doc = jsdom.jsdom('<!doctype html><html><body><div id="container"></div></body></html>')
     @win = @doc.defaultView
     @doc.createElementNS = createElementNSForHighchart.bind({doc: @doc})
     @Highcharts = require('highcharts')(@win)
+
+    @chartData = @formatData()
     @initChart()
 
   initChart: () ->
@@ -108,5 +111,11 @@ class GraphBuilder
       .catch((e) ->
         console.error(e)
       )
+
+  formatData: () ->
+    data = {}
+    if(@config.type is "stackedBar")
+      data = new StackedBarFormatter(@config, @widgetData).format()
+    return data
 
 module.exports = GraphBuilder
