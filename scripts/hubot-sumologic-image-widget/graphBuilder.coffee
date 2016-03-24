@@ -30,7 +30,7 @@ class GraphBuilder
 
     @Highcharts.chart('container', @formatData())
 
-  generateChart: () ->
+  generateChart: (message) ->
     svg = @win.document.getElementById('container').childNodes[0].innerHTML
     svgPath = __dirname + '/chart.svg'
     pngPath = __dirname + '/chart.png'
@@ -45,8 +45,9 @@ class GraphBuilder
             pnfs
               .writeFile(pngPath, buffer)
               .then(() ->
+                #@todo[jvi] : Think to delete me
                 console.log "File created : #{pngPath}"
-                sendToSlack(pngPath)
+                sendToSlack(pngPath, message.user.room)
               )
           )
       )

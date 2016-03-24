@@ -6,12 +6,13 @@ sumoToken     = process.env.SUMOLOGIC_TOKEN || "ZnJvbnRlbmRAdGVhZHMudHY6RzhMZGNK
 class WidgetFinder
   constructor: (@name, @robot) ->
     @config = _.get(mapping, @name)
-    if !_.isUndefined(@config)
-      @getData()
-    else
-      robot.logger.error "This widget isn't mapped yet !"
+    if _.isUndefined(@config)
+      robot.logger.error "The widget '#{@name}' isn't mapped yet !"
 
-  getData: () ->
+  exists: () ->
+    not _.isUndefined(@config)
+
+  getData: (message) ->
     @robot
       .http("https://api.sumologic.com/api/v1/dashboards/#{@config.dashboardId}/data")
       .header('Authorization', "Basic #{sumoToken}")
@@ -20,6 +21,6 @@ class WidgetFinder
         widgetData = _.find(dashboardData, {'id': @config.widgetId})
         if(!_.isUndefined(widgetData))
           graph = new GraphBuilder(@name, @config, widgetData)
-          graph.generateChart()
+          graph.generateChart(message)
 
 module.exports = WidgetFinder
