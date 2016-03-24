@@ -7,7 +7,7 @@ sendToSlack                 = require './sendToSlack'
 StackedBarFormatter         = require './graph-formatters/stackedBarFormatter'
 
 class GraphBuilder
-  constructor: (@config, @widgetData) ->
+  constructor: (@name, @config, @widgetData) ->
     @doc = jsdom.jsdom('<!doctype html><html><body><div id="container"></div></body></html>')
     @win = @doc.defaultView
     @doc.createElementNS = createElementNSForHighchart.bind({doc: @doc})
@@ -28,65 +28,7 @@ class GraphBuilder
       }
     })
 
-    @Highcharts.chart('container', {
-      chart: {
-        type: 'column',
-        forExport: true,
-        width: 600,
-        height: 400
-      },
-      title: {
-        text: 'Stacked column chart'
-      },
-      xAxis: {
-        type: 'datetime',
-        min: 1458510705000,
-        max: 1458511605000
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          text: 'Number of errors'
-        }
-      },
-      plotOptions: {
-        column: {
-          stacking: 'normal'
-        }
-      },
-
-      series: [{
-        name: '404',
-        data: [{
-          x: 1458510720000,
-          y: 1
-        }, {
-          x: 1458510840000,
-          y: 4
-        }, {
-          x: 1458510960000,
-          y: 4
-        }, {
-          x: 1458511260000,
-          y: 5
-        }, {
-          x: 1458511320000,
-          y: 6
-        }]
-      }, {
-        name: '403',
-        data: [{
-          x: 1458510720000,
-          y: 1
-        }, {
-          x: 1458511260000,
-          y: 6
-        }, {
-          x: 1458511320000,
-          y: 1
-        }]
-      }]
-    })
+    @Highcharts.chart('container', @formatData())
 
   generateChart: () ->
     svg = @win.document.getElementById('container').childNodes[0].innerHTML
@@ -115,7 +57,7 @@ class GraphBuilder
   formatData: () ->
     data = {}
     if(@config.type is "stackedBar")
-      data = new StackedBarFormatter(@config, @widgetData).format()
+      data = new StackedBarFormatter(@name, @config, @widgetData).getData()
     return data
 
 module.exports = GraphBuilder
