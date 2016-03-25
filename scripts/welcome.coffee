@@ -12,7 +12,7 @@ getRandomItem = (items) => items[Math.floor(Math.random()*items.length)]
 
 module.exports = (robot) ->
 
-  robot.messageRoom "general", "Hubot is back !!!!!! :banana:"
+  # robot.messageRoom "general", "Hubot is back !!!!!! :banana:"
 
   responses = [
     "uk:Hello!"
