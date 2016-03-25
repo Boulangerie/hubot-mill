@@ -5,6 +5,7 @@ pnfs                        = require 'pn/fs'
 createElementNSForHighchart = require './createElementNSForHighchart'
 sendToSlack                 = require './sendToSlack'
 StackedBarFormatter         = require './graph-formatters/stackedBarFormatter'
+PieFormatter                = require './graph-formatters/pieFormatter'
 
 class GraphBuilder
   constructor: (@name, @config, @widgetData) ->
@@ -57,8 +58,10 @@ class GraphBuilder
 
   formatData: () ->
     data = {}
-    if(@config.type is "stackedBar")
+    if (@config.type is "stackedBar")
       data = new StackedBarFormatter(@name, @config, @widgetData).getData()
+    else if (@config.type is "pie")
+      data = new PieFormatter(@name, @config, @widgetData).getData()
     return data
 
 module.exports = GraphBuilder

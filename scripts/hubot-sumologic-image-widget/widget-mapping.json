@@ -9,9 +9,14 @@
     "widgetId" : 11116794,
     "type" : "stackedBar"
   },
-  "front-format-version": {
+  "front-router-version": {
     "dashboardId" : 11113109,
-    "widgetId" : 11116794,
+    "widgetId" : 11115303,
+    "type" : "pie"
+  },
+  "front-V2-format": {
+    "dashboardId" : 11113109,
+    "widgetId" : 11253660,
     "type" : "pie"
   }
 }
