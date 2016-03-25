@@ -6,8 +6,6 @@ sumoToken     = process.env.SUMOLOGIC_TOKEN || "ZnJvbnRlbmRAdGVhZHMudHY6RzhMZGNK
 class WidgetFinder
   constructor: (@name, @robot) ->
     @config = _.get(mapping, @name)
-    if _.isUndefined(@config)
-      robot.logger.error "The widget '#{@name}' isn't mapped yet !"
 
   exists: () ->
     not _.isUndefined(@config)
