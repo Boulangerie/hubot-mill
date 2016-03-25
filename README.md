@@ -262,13 +262,19 @@ node ./scripts/hubot-sumologic-image-widget/gist.js
 ## Now
 
 - [x] Tests the all chain !
-- [ ] Use real data from sumologic widget
-- [ ] Implement some highchart adapters depending of widget
-- [ ] Refactor a lot
+- [x] Use real data from sumologic widget
+- [x] Implement some highchart adapters depending of widget
+- [x] Add Hubot hear for this dev
+- [x] Test on a true slack
+- [ ] Graph can be built on highchart or svg template
+  - [ ] Split how work graph builder for allowing multiple implementation
+  - [ ] Base on graph config? type ?
+- [ ] Add missing graphFormatters
 - [ ] Clean generated image file
-- [ ] Use promises correctly
-- [ ] Add Hubot hear for this dev
-- [ ] Test on a true slack
+- [ ] Style graph
+- [ ] Use promises !
+   - [ ] Break callback hell into promise composition
+- [ ] Refactor a lot
 - [ ] Clean it !
 
 ## At dev end
