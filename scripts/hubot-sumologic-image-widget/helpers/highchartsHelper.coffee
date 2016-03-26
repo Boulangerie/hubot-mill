@@ -1,5 +1,5 @@
 jsdom                       = require 'jsdom'
-createElementNSForHighchart = require './createElementNSForHighchart'
+createElementNSForHighchart = require '../createElementNSForHighchart'
 
 class HighchartsHelper
   constructor: () ->

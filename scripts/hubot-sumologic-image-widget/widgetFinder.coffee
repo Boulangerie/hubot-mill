@@ -15,7 +15,7 @@ class WidgetFinder
   getData: () ->
     SumologicHelper
       .getDashboardData(@config.dashboardId)
-      .then((dashboardData) ->
+      .then((dashboardData) =>
         widgetData = _.find(dashboardData, {'id': @config.widgetId})
         if(!_.isUndefined(widgetData))
           return widgetData

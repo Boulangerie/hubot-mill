@@ -1,5 +1,5 @@
 WidgetFinder    = require './hubot-sumologic-image-widget/widgetFinder'
-GraphBuilder    = require './hubot-sumologic-image-widget/graphBuilder'
+GraphBuilder    = require './hubot-sumologic-image-widget/helpers/graphBuilder'
 HubotTeleporter = require './hubot-sumologic-image-widget/helpers/hubotTeleporter'
 sendToSlack     = require './hubot-sumologic-image-widget/sendToSlack'
 
@@ -16,8 +16,11 @@ module.exports = (robot) ->
           GraphBuilder.generateSvgChart(widget.name, widget.config, widgetData)
         )
         .then(GraphBuilder.exportSvgToPng)
-        .then(sendToSlack)
+        .then((filePath) ->
+          sendToSlack(filePath, result.message.user.room)
+        )
         .catch((e) ->
+          result.reply "Something bad happen ! Seems I can't send you your graph :disappointed:"
           robot.logger.error "Can't send the widget due to the following error"
           robot.logger.error e
         )

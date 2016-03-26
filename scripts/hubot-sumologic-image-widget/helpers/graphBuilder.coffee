@@ -1,8 +1,9 @@
 Promise                     = require 'bluebird'
 fs                          = Promise.promisifyAll(require('fs'))
+_                           = require 'lodash'
 svg2png                     = require 'svg2png'
-StackedBarChart             = require './graphs/stackedBarChart'
-PieChart                    = require './graphs/pieChart'
+StackedBarChart             = require '../graphs/stackedBarChart'
+PieChart                    = require '../graphs/pieChart'
 
 class GraphBuilder
   constructor: () ->
@@ -12,10 +13,9 @@ class GraphBuilder
     svg = chart.document.getElementById('container').childNodes[0].innerHTML
     svgPath = __dirname + "/#{chartName}.svg"
 
-    fs
-      .writeFile(svgPath, svg)
-      .then((result) ->
-        return {result: result, filepath: svgPath}
+    fs.writeFileAsync(svgPath, svg)
+      .then(() ->
+        return svgPath
       , (error) ->
         return error
       )
@@ -29,19 +29,19 @@ class GraphBuilder
       tempName.pop()
       tempName.push('pngName')
       pathToPng = tempName.join('/')
-      
+
     fs
-      .readFile(pathToSvg)
+      .readFileAsync(pathToSvg)
       .then(svg2png)
       .then((buffer) ->
-        fs.writeFile(pathToPng, buffer)
+        fs.writeFileAsync(pathToPng, buffer)
       )
       .then((results) ->
         console.log results
         return pathToPng
       )
 
-  getChart: (chartName, config, widgetData) ->
+  getChart: (name, config, widgetData) ->
     chart = {}
     if (config.type is "stackedBar")
       chart = new StackedBarChart(name, config, widgetData)
