@@ -1,11 +1,9 @@
-_ = require 'lodash'
+_                 = require 'lodash'
+HighchartsHelper  = require '../helpers/highchartsHelper'
 
-class StackedBarFormatter
+class StackedBarChart
   constructor: (@name, @config, @rawData) ->
-    @format(@rawData)
-
-  getData: () ->
-    return @data
+    return HighchartsHelper.getNewPlayground(@format(@rawData))
 
   format: (rawData) ->
     @data = {
@@ -65,4 +63,4 @@ class StackedBarFormatter
     return _.toArray(series);
 
 
-module.exports = StackedBarFormatter
+module.exports = StackedBarChart

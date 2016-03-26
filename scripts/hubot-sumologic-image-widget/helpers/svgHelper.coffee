@@ -7,7 +7,7 @@ sendToSlack                 = require './sendToSlack'
 StackedBarFormatter         = require './graph-formatters/stackedBarFormatter'
 PieFormatter                = require './graph-formatters/pieFormatter'
 
-class GraphBuilder
+class SvgHelper
   constructor: (@name, @config, @widgetData) ->
     @doc = jsdom.jsdom('<!doctype html><html><body><div id="container"></div></body></html>')
     @win = @doc.defaultView
@@ -30,6 +30,12 @@ class GraphBuilder
     })
 
     @Highcharts.chart('container', @formatData())
+
+  generateSvgChart: (chartName) ->
+
+  exportSvgToPng: (pathToSvg) ->
+
+
 
   generateChart: (message) ->
     svg = @win.document.getElementById('container').childNodes[0].innerHTML
@@ -64,4 +70,4 @@ class GraphBuilder
       data = new PieFormatter(@name, @config, @widgetData).getData()
     return data
 
-module.exports = GraphBuilder
+module.exports = new SvgHelper()

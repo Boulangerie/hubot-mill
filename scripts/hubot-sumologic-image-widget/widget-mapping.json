@@ -1,4 +1,9 @@
 {
+  "bad-front-APIV1-error": {
+    "dashboardId" : 9999999,
+    "widgetId" : 11116785,
+    "type" : "stackedBar"
+  },
   "front-APIV1-error": {
     "dashboardId" : 11113109,
     "widgetId" : 11116785,

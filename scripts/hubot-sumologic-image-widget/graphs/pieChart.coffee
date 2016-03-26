@@ -1,11 +1,9 @@
-_ = require 'lodash'
+_                 = require 'lodash'
+HighchartsHelper  = require '../helpers/highchartsHelper'
 
-class PieFormatter
+class PieChart
   constructor: (@name, @config, @rawData) ->
-    @format(@rawData)
-
-  getData: () ->
-    return @data
+    return HighchartsHelper.getNewPlayground(@format(@rawData))
 
   format: (rawData) ->
     @data = {
@@ -49,4 +47,4 @@ class PieFormatter
       data: data
     }]
 
-module.exports = PieFormatter
+module.exports = PieChart

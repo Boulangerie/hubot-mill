@@ -1,7 +1,7 @@
-GraphBuilder  = require './graphBuilder'
-mapping       = require './widget-mapping.json'
-_             = require 'lodash'
-sumoToken     = process.env.SUMOLOGIC_TOKEN
+mapping         = require './widget-mapping.json'
+_               = require 'lodash'
+Promise         = require 'bluebird'
+SumologicHelper = require('./helpers/sumologicHelper')
 
 class WidgetFinder
   constructor: (@name, @robot) ->
@@ -12,15 +12,15 @@ class WidgetFinder
   exists: () ->
     not _.isUndefined(@config)
 
-  getData: (message) ->
-    @robot
-      .http("https://api.sumologic.com/api/v1/dashboards/#{@config.dashboardId}/data")
-      .header('Authorization', "Basic #{sumoToken}")
-      .get() (err, res, body) =>
-        dashboardData = JSON.parse(body).dashboardMonitorDatas
+  getData: () ->
+    SumologicHelper
+      .getDashboardData(@config.dashboardId)
+      .then((dashboardData) ->
         widgetData = _.find(dashboardData, {'id': @config.widgetId})
         if(!_.isUndefined(widgetData))
-          graph = new GraphBuilder(@name, @config, widgetData)
-          graph.generateChart(message)
+          return widgetData
+        else
+          return Promise.reject("Widget not found !")
+      )
 
 module.exports = WidgetFinder

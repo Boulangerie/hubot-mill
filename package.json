@@ -32,6 +32,7 @@
     "npm": "2.14.7"
   },
   "devDependencies": {
+    "bluebird": "^3.3.4",
     "form-data": "^0.2.0",
     "highcharts": "^4.2.3",
     "jsdom": "^8.1.0",
