@@ -14,7 +14,7 @@ getRandomItem = (items) => items[Math.floor(Math.random()*items.length)]
 
 class Dashboard
   # Static
-  @SumologicToken: process.env.SUMOLOGIC_TOKEN || "ZnJvbnRlbmRAdGVhZHMudHY6RzhMZGNKdHVSTTh5IQ=="
+  @SumologicToken: process.env.SUMOLOGIC_TOKEN
   @sumoId: '140742254'
   @getSumoURLById: (id) -> 'https://service.sumologic.com/ui/dashboard.html?f=' + id + '&t=d'
 

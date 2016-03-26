@@ -1,7 +1,7 @@
 GraphBuilder  = require './graphBuilder'
 mapping       = require './widget-mapping.json'
 _             = require 'lodash'
-sumoToken     = process.env.SUMOLOGIC_TOKEN || "ZnJvbnRlbmRAdGVhZHMudHY6RzhMZGNKdHVSTTh5IQ=="
+sumoToken     = process.env.SUMOLOGIC_TOKEN
 
 class WidgetFinder
   constructor: (@name, @robot) ->
