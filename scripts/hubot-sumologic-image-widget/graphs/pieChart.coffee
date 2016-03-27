@@ -3,8 +3,11 @@ HighchartsHelper  = require '../helpers/highchartsHelper'
 
 class PieChart
   constructor: (@name, @config, @rawData) ->
-    return HighchartsHelper.getNewPlayground(@format(@rawData))
+    @svg = HighchartsHelper.getNewPlayground(@format(@rawData))
 
+  getSvg: () ->
+    @svg  
+    
   format: (rawData) ->
     @data = {
       chart:

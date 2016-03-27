@@ -22,6 +22,6 @@ class HighchartsHelper
 
     Highcharts.chart('container', chartData)
 
-    return win
+    return win.document.getElementById('container').childNodes[0].innerHTML
 
 module.exports = new HighchartsHelper()

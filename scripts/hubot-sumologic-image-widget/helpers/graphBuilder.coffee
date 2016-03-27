@@ -12,8 +12,8 @@ class GraphBuilder
   constructor: () ->
 
   generateSvgChart: (chartName, config, widgetData) ->
-    chart = @getChart(chartName, config, widgetData)
-    svg = chart.document.getElementById('container').childNodes[0].innerHTML
+    svg = @getChart(chartName, config, widgetData)
+    #@todo[jvi] : Locate tmp file and use it instead of using __dirname
     svgPath = __dirname + "/#{chartName}.svg"
 
     fs.writeFileAsync(svgPath, svg)
@@ -40,7 +40,6 @@ class GraphBuilder
         fs.writeFileAsync(pathToPng, buffer)
       )
       .then((results) ->
-        console.log results
         return pathToPng
       )
 
@@ -56,6 +55,6 @@ class GraphBuilder
       chart = new TimecounterChart(name, config, widgetData)
     else if (config.type is "counter")
       chart = new CounterChart(name, config, widgetData)
-    return chart
+    return chart.getSvg()
 
 module.exports = new GraphBuilder()
