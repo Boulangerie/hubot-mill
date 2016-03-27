@@ -4,6 +4,9 @@ _                           = require 'lodash'
 svg2png                     = require 'svg2png'
 StackedBarChart             = require '../graphs/stackedBarChart'
 PieChart                    = require '../graphs/pieChart'
+LinesChart                  = require '../graphs/linesChart'
+TimecounterChart            = require '../graphs/timecounterChart'
+CounterChart                = require '../graphs/counterChart'
 
 class GraphBuilder
   constructor: () ->
@@ -47,6 +50,12 @@ class GraphBuilder
       chart = new StackedBarChart(name, config, widgetData)
     else if (config.type is "pie")
       chart = new PieChart(name, config, widgetData)
+    else if (config.type is "lines")
+      chart = new LinesChart(name, config, widgetData)
+    else if (config.type is "timecounter")
+      chart = new TimecounterChart(name, config, widgetData)
+    else if (config.type is "counter")
+      chart = new CounterChart(name, config, widgetData)
     return chart
 
 module.exports = new GraphBuilder()
