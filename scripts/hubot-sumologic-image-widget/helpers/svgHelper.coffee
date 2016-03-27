@@ -1,73 +1,16 @@
-jsdom                       = require 'jsdom'
-fs                          = require 'fs'
-svg2png                     = require 'svg2png'
-pnfs                        = require 'pn/fs'
-createElementNSForHighchart = require './createElementNSForHighchart'
-sendToSlack                 = require './sendToSlack'
-StackedBarFormatter         = require './graph-formatters/stackedBarFormatter'
-PieFormatter                = require './graph-formatters/pieFormatter'
+_         = require 'lodash'
 
 class SvgHelper
-  constructor: (@name, @config, @widgetData) ->
-    @doc = jsdom.jsdom('<!doctype html><html><body><div id="container"></div></body></html>')
-    @win = @doc.defaultView
-    @doc.createElementNS = createElementNSForHighchart.bind({doc: @doc})
-    @Highcharts = require('highcharts')(@win)
+  constructor: () ->
 
-    @chartData = @formatData()
-    @initChart()
-
-  initChart: () ->
-    @Highcharts.setOptions({
-      plotOptions: {
-        series: {
-          animation: false,
-          dataLabels: {
-            defer: false
-          }
-        }
-      }
-    })
-
-    @Highcharts.chart('container', @formatData())
-
-  generateSvgChart: (chartName) ->
-
-  exportSvgToPng: (pathToSvg) ->
-
-
-
-  generateChart: (message) ->
-    svg = @win.document.getElementById('container').childNodes[0].innerHTML
-    svgPath = __dirname + '/chart.svg'
-    pngPath = __dirname + '/chart.png'
-
-    pnfs
-      .writeFile(svgPath, svg)
-      .then(() ->
-        pnfs
-          .readFile(svgPath)
-          .then(svg2png)
-          .then((buffer) ->
-            pnfs
-              .writeFile(pngPath, buffer)
-              .then(() ->
-                #@todo[jvi] : Think to delete me
-                console.log "File created : #{pngPath}"
-                sendToSlack(pngPath, message.user.room)
-              )
-          )
-      )
-      .catch((e) ->
-        console.error(e)
-      )
-
-  formatData: () ->
-    data = {}
-    if (@config.type is "stackedBar")
-      data = new StackedBarFormatter(@name, @config, @widgetData).getData()
-    else if (@config.type is "pie")
-      data = new PieFormatter(@name, @config, @widgetData).getData()
-    return data
+  #If the svg is less than 400px, phamtomjs or svgTopng seems to not
+  #allow this value and fallback with 400x300 dimensions
+  getDimensions: (chartData) ->
+    width   = _.get(chartData, 'width', 400)
+    height  = _.get(chartData, 'height', 400)
+    return {
+      width: if width <= 400 then 400 else width
+      height: if height <= 400 then 400 else height
+    }
 
 module.exports = new SvgHelper()
