@@ -13,9 +13,21 @@ class CounterChart
     @svg
 
   format: (rawData) ->
-    field =  _.get(rawData, 'fields.0.name')
-    value  = _.parseInt(_.get(rawData, "records.0.map.#{field}"))
-    [fullNumber, shortNumber, metric] = numeral(value).format('0a').match(/([0-9]*)([a-zA-Z])$/)
-    return {value : shortNumber, metric: metric}
+    fieldName =  @extractFieldName(_.get(rawData, 'fields', []))
+    value  = _.parseInt(_.get(rawData, "records.0.map.#{fieldName}"))
+    numberFormatted = numeral(value).format('0a').match(/([0-9]*)([a-zA-Z])?$/)
+    if _.isUndefined(numberFormatted[2])
+      numberFormatted[2] = ''
+    return {value : numberFormatted[1], metric: numberFormatted[2]}
+
+  extractFieldName: (fields) ->
+    allowedFieldTypes = ['int', 'double']
+    field = _.filter(fields, (item) ->
+      _.includes(allowedFieldTypes, item.fieldType)
+    )
+    if field.length is 1
+      return _.first(field).name
+    else
+      throw "Counter Graph : Don't find an eligible field, in JSON after #{JSON.stringify(fields, null, 4)}"
 
 module.exports = CounterChart

@@ -316,6 +316,7 @@ and avoid a lot of this stuff
   - [ ] Donuts
   - [ ] Text percentage
   - [ ] Filled line chart
+- [ ] Upgrade logic behind how we format rawData from sumo (to dumb for now)
 - [ ] Style should be configurable
 - [ ] Apply Color rules on some of them when sumo will give us that details 
 
