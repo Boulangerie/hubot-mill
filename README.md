@@ -261,25 +261,64 @@ node ./scripts/hubot-sumologic-image-widget/gist.js
 
 ## Now
 
+### Version 1.0
 - [x] Tests the all chain !
 - [x] Use real data from sumologic widget
 - [x] Implement some highchart adapters depending of widget
 - [x] Add Hubot hear for this dev
 - [x] Test on a true slack
-- [ ] Graph can be built on highchart or svg template
+- [x] Graph can be built on highchart or svg template
   - [x] Split how work graph builder for allowing multiple implementation
   - [x] Base on graph type
-  - [ ] Add missing graph
-- [ ] Clean generated image file
-- [ ] Style graph
-- [ ] Better logs for be able to track activity
 - [x] Use promises !
    - [x] Break callback hell into promise composition
-- [ ] Refactor a lot (Again :D ?)
-- [ ] Clean it !
+- [ ] Clean generated image file
+  - [ ] Auto find tmp file
+  - [ ] Use it
+- [ ] Style graph
+  - [ ] Auto find tmp file
+- [ ] Clean && Refactor a lot
+- [ ] Package it !
+  - [ ] Boulangerie repo
+    - [ ] Issues followings subjects
+    - [ ] Millestone them ?
+  - [ ] Readme
+  - [ ] Npm publish 
 
-## At dev end
+### Learn hubot to make graphs with query
+Instead of using dashboard data, use true results from
+a custom query. The naive way should to transform query
+results into dashboard data format. Like this graphs implementation
+should work as expected without no update on it.
 
-- [ ] Remove dev npm scripts
-- [ ] Remove tests files
-- [ ] Consider to package it 
+We should use the same hubot command, but hubot have to warn user
+the result could not come as quickly as a widget result 
+
+- [ ] Associate a query with a name and a graph type
+- [ ] Implement logic to transform sumo data into something usable for graph
+- [ ] Add hubot behavior
+- [ ] (Depending of : Learn hubot to learn) Update or consider it
+
+### Learn hubot to learn
+POC on fact hubot can get a json file through slack
+Can be a link to file but it's less safer
+Finally we can brainwash hubot if we want !
+Maybe if sumologic fix their API we could use it properly
+and avoid a lot of this stuff
+
+- [ ] Add brain capabilities
+  - [ ] Import widget into hubot brain
+    - [ ] Should add or override 
+  - [ ] brainwash command
+
+### Learn hubot to make beautiful graphs
+- [ ] Missing graph
+  - [ ] Donuts
+  - [ ] Text percentage
+  - [ ] Filled line chart
+- [ ] Style should be configurable
+- [ ] Apply Color rules on some of them when sumo will give us that details 
+
+### Learn hubot to leave rocks for find his bullshit ! 
+- [ ] Implement a true logger to see what hubot do
+ 
