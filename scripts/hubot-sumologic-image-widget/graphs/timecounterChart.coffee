@@ -1,6 +1,8 @@
 _                 = require 'lodash'
 SvgHelper         = require '../helpers/svgHelper'
 timecounterTpl    = require './svgTpl/timecounter.tpl'
+moment            = require 'moment'
+unitMappings      = require '../constants/momentTimeUnitMapping'
 
 class TimecounterChart
   constructor: (@name, @config, @rawData) ->
@@ -12,7 +14,21 @@ class TimecounterChart
     @svg
 
   format: (rawData) ->
-    {value : 300, metric: 'ms'}
+    field =  _.get(rawData, 'fields.0.name')
+    value  = _.parseInt(_.get(rawData, "records.0.map.#{field}"))
+    @extractUnit(value)
+
+  extractUnit: (msTime) ->
+    timeMap = {}
+    time = moment.duration(msTime, 'ms')
+    _.forEach(unitMappings, (mapping) ->
+      formattedTime = time.get(mapping.unit)
+      if formattedTime > 0
+        timeMap = {value:formattedTime, metric: mapping.format}
+      else
+        return false
+    )
+    return timeMap
 
 
 module.exports = TimecounterChart

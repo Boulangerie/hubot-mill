@@ -34,6 +34,11 @@
     "widgetId" : 11240367,
     "type" : "counter"
   },
+  "format-router-calls": {
+    "dashboardId" : 11113109,
+    "widgetId" : 11115301,
+    "type" : "counter"
+  },
   "front-load-format-js": {
     "dashboardId" : 11113109,
     "widgetId" : 11113543,
