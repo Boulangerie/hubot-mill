@@ -20,11 +20,13 @@ class GraphBuilder
 
     @createGraphDir()
       .then(
+        console.log "Will write"
         fs.writeFileAsync(svgPath, svg)
       )
       .then(() ->
         return svgName
-      , (error) ->
+      )
+      .catch((error) ->
         return error
       )
 
@@ -40,6 +42,7 @@ class GraphBuilder
       tempName.push('pngName')
       pathToPng = tempName.join('/')
 
+    console.log  "Export ready ?"
     @createGraphDir()
       .then(() ->
         fs.readFileAsync(svgPath)
@@ -55,24 +58,23 @@ class GraphBuilder
   cleanCharts: () ->
     fs
       .readdirAsync(@GRAPH_DIR_PATH)
-      .then((files) ->
+      .then((files) =>
         filesPromises = []
         console.log "Charts files will be deleted"
-        _.forEach(files, (file) ->
+        _.forEach(files, (file) =>
           console.log file
-          filesPromises.push(fs.unlinkAsync(file))
+          filesPromises.push(fs.unlinkAsync("#{@GRAPH_DIR_PATH}/#{file}"))
         )
         Promise.all(filesPromises)
       )
 
   createGraphDir: () ->
-    fs
-      .statAsync(@GRAPH_DIR_PATH)
-      .then((stats) =>
-        console.log "Dir exists"
-        console.log stats.isDirectory()
-        if not stats.isDirectory()
-          return fs.mkdirAsync(@GRAPH_DIR_PATH, 0o600)
+    fs.mkdirAsync(@GRAPH_DIR_PATH, 0o666)
+      .catch((error) =>
+        if(error.code isnt 'EEXIST')
+          return Promise.reject(error)
+        else
+          return Promise.resolve(true)
       )
 
   getChart: (name, config, widgetData) ->

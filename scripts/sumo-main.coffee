@@ -13,13 +13,18 @@ module.exports = (robot) ->
       widget
         .getData()
         .then((widgetData) ->
-          GraphBuilder.generateSvgChart(widget.name, widget.config, widgetData)
+          return GraphBuilder.generateSvgChart(widget.name, widget.config, widgetData)
         )
-        .then(GraphBuilder.exportSvgToPng)
+        .then((svgName) ->
+          return GraphBuilder.exportSvgToPng(svgName)
+        )
 #        .then((filePath) ->
 #          sendToSlack(filePath, result.message.user.room)
 #        )
-        .then(GraphBuilder.cleanCharts)
+        .then((pathToPng) ->
+          console.log "Png file should be there : #{pathToPng}"
+          return GraphBuilder.cleanCharts()
+        )
         .catch((e) ->
           result.reply "Something bad happen ! Seems I can't send you your graph :disappointed:"
           robot.logger.error "Can't send the widget due to the following error"
@@ -27,5 +32,4 @@ module.exports = (robot) ->
         )
     else
       result.reply "I don't know this widget sorry... :disappointed:"
-
 
