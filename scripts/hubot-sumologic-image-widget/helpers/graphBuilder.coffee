@@ -1,4 +1,5 @@
 Promise                     = require 'bluebird'
+os                          = require 'os'
 fs                          = Promise.promisifyAll(require('fs'))
 _                           = require 'lodash'
 svg2png                     = require 'svg2png'
@@ -10,37 +11,68 @@ CounterChart                = require '../graphs/counterChart'
 
 class GraphBuilder
   constructor: () ->
+    @GRAPH_DIR_PATH = "#{os.tmpdir()}/sumograph"
 
   generateSvgChart: (chartName, config, widgetData) ->
     svg = @getChart(chartName, config, widgetData)
-    #@todo[jvi] : Locate tmp file and use it instead of using __dirname
-    svgPath = __dirname + "/#{chartName}.svg"
+    svgName = "#{chartName}.svg"
+    svgPath = "#{@GRAPH_DIR_PATH}/#{svgName}"
 
-    fs.writeFileAsync(svgPath, svg)
+    @createGraphDir()
+      .then(
+        fs.writeFileAsync(svgPath, svg)
+      )
       .then(() ->
-        return svgPath
+        return svgName
       , (error) ->
         return error
       )
 
-  exportSvgToPng: (pathToSvg, pngName = "") ->
+  exportSvgToPng: (svgName, pngName = "") ->
+    svgPath = "#{@GRAPH_DIR_PATH}/#{svgName}"
+
     #@todo[jvi] : Do better ?
     if (_.isEmpty(pngName))
-      pathToPng = pathToSvg.replace('.svg', '.png')
+      pathToPng = svgPath.replace('.svg', '.png')
     else
       tempName = pngName.split('/')
       tempName.pop()
       tempName.push('pngName')
       pathToPng = tempName.join('/')
 
-    fs
-      .readFileAsync(pathToSvg)
-      .then(svg2png)
-      .then((buffer) ->
-        fs.writeFileAsync(pathToPng, buffer)
+    @createGraphDir()
+      .then(() ->
+        fs.readFileAsync(svgPath)
+          .then(svg2png)
+          .then((buffer) ->
+            fs.writeFileAsync(pathToPng, buffer)
+          )
+          .then((results) ->
+            return pathToPng
+          )
       )
-      .then((results) ->
-        return pathToPng
+
+  cleanCharts: () ->
+    fs
+      .readdirAsync(@GRAPH_DIR_PATH)
+      .then((files) ->
+        filesPromises = []
+        console.log "Charts files will be deleted"
+        _.forEach(files, (file) ->
+          console.log file
+          filesPromises.push(fs.unlinkAsync(file))
+        )
+        Promise.all(filesPromises)
+      )
+
+  createGraphDir: () ->
+    fs
+      .statAsync(@GRAPH_DIR_PATH)
+      .then((stats) =>
+        console.log "Dir exists"
+        console.log stats.isDirectory()
+        if not stats.isDirectory()
+          return fs.mkdirAsync(@GRAPH_DIR_PATH, 0o600)
       )
 
   getChart: (name, config, widgetData) ->
