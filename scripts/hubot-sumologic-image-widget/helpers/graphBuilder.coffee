@@ -1,6 +1,4 @@
 Promise                     = require 'bluebird'
-os                          = require 'os'
-fs                          = Promise.promisifyAll(require('fs'))
 _                           = require 'lodash'
 svg2png                     = require 'svg2png'
 StackedBarChart             = require '../graphs/stackedBarChart'
@@ -8,10 +6,10 @@ PieChart                    = require '../graphs/pieChart'
 LinesChart                  = require '../graphs/linesChart'
 TimecounterChart            = require '../graphs/timecounterChart'
 CounterChart                = require '../graphs/counterChart'
+FileHelper                  = require '../helpers/fileHelper'
 
 class GraphBuilder
   constructor: () ->
-    @GRAPH_DIR_PATH = "#{os.tmpdir()}/sumograph"
 
   generateSvgChart: (chartName, config, widgetData) ->
     svg = @getChart(chartName, config, widgetData)
@@ -68,14 +66,7 @@ class GraphBuilder
         Promise.all(filesPromises)
       )
 
-  createGraphDir: () ->
-    fs.mkdirAsync(@GRAPH_DIR_PATH, 0o666)
-      .catch((error) =>
-        if(error.code isnt 'EEXIST')
-          return Promise.reject(error)
-        else
-          return Promise.resolve(true)
-      )
+
 
   getChart: (name, config, widgetData) ->
     chart = {}
