@@ -1,6 +1,7 @@
 WidgetFinder    = require './hubot-sumologic-image-widget/widgetFinder'
 GraphBuilder    = require './hubot-sumologic-image-widget/helpers/graphBuilder'
 HubotTeleporter = require './hubot-sumologic-image-widget/helpers/hubotTeleporter'
+FileHelper      = require './hubot-sumologic-image-widget/helpers/fileHelper'
 sendToSlack     = require './hubot-sumologic-image-widget/sendToSlack'
 
 module.exports = (robot) ->
@@ -16,6 +17,7 @@ module.exports = (robot) ->
           return GraphBuilder.generateSvgChart(widget.name, widget.config, widgetData)
         )
         .then((svgName) ->
+          console.log svgName
           return GraphBuilder.exportSvgToPng(svgName)
         )
 #        .then((filePath) ->
@@ -23,7 +25,7 @@ module.exports = (robot) ->
 #        )
         .then((pathToPng) ->
           console.log "Png file should be there : #{pathToPng}"
-          return GraphBuilder.cleanCharts()
+          return FileHelper.clean()
         )
         .catch((e) ->
           result.reply "Something bad happen ! Seems I can't send you your graph :disappointed:"
