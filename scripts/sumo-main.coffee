@@ -17,14 +17,15 @@ module.exports = (robot) ->
           return GraphBuilder.generateSvgChart(widget.name, widget.config, widgetData)
         )
         .then((svgName) ->
-          console.log svgName
           return GraphBuilder.exportSvgToPng(svgName)
         )
-#        .then((filePath) ->
-#          sendToSlack(filePath, result.message.user.room)
-#        )
-        .then((pathToPng) ->
-          console.log "Png file should be there : #{pathToPng}"
+        .then((pngName) ->
+          filePath = FileHelper.getPath(pngName)
+          sendToSlack(filePath, result.message.user.room)
+        )
+        .then((result) ->
+          console.log "result from sendToSlack : #{result}"
+          console.log "Files will be cleaned"
           return FileHelper.clean()
         )
         .catch((e) ->

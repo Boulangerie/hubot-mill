@@ -5,6 +5,7 @@ fs              = Promise.promisifyAll(require('fs'))
 
 #todo : Instead of using promise of folder, use it or
 #       flag, this could avoid problem with promise
+#       Other solution should be to create it at module install
 
 class FileHelper
   constructor: () ->
@@ -12,7 +13,7 @@ class FileHelper
     @DIR_PROMISE = @createDir()
 
   write: (filename, data) ->
-    filepath = "#{@DIR_PATH}/#{filename}"
+    filepath = @getPath(filename)
     @DIR_PROMISE
       .then(() ->
         fs.writeFileAsync(filepath, data)
@@ -25,12 +26,15 @@ class FileHelper
       )
 
   read: (filename) ->
-    filepath = "#{@DIR_PATH}/#{filename}"
+    filepath = @getPath(filename)
     @DIR_PROMISE
       .then(() ->
         fs.readFileAsync(filepath)
       )
-  
+
+  getPath: (filename) ->
+    return "#{@DIR_PATH}/#{filename}"
+
   #todo : Clean it ;)
   clean: () ->
     fs
@@ -38,9 +42,9 @@ class FileHelper
     .then((files) =>
       filesPromises = []
       console.log "Charts files will be deleted"
-      _.forEach(files, (file) =>
-        console.log file
-        filesPromises.push(fs.unlinkAsync("#{@DIR_PATH}/#{file}"))
+      _.forEach(files, (filename) =>
+        console.log filename
+        filesPromises.push(fs.unlinkAsync("#{@getPath(filename)}"))
       )
       Promise.all(filesPromises)
     )

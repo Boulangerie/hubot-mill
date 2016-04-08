@@ -272,11 +272,10 @@ node ./scripts/hubot-sumologic-image-widget/gist.js
   - [x] Base on graph type
 - [x] Use promises !
    - [x] Break callback hell into promise composition
-- [ ] Clean generated image file
-  - [ ] Auto find tmp file
-  - [ ] Use it
+- [x] Clean generated image file
+  - [x] Auto find tmp file
+  - [x] Use it
 - [ ] Style graph
-  - [ ] Auto find tmp file
 - [ ] Clean && Refactor a lot
 - [ ] Package it !
   - [ ] Boulangerie repo

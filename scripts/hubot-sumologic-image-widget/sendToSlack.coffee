@@ -12,7 +12,8 @@ sendToSlack = (filepath, room) ->
     form.append('file', fs.createReadStream(filepath))
 
     #@todo[jvi] : Make me pretty and smart !
-    form.append('channels', "##{room}")
+#    form.append('channels', "##{room}")
+    form.append('channels', "#troll")
 
     #@todo[jvi] : Think to delete me
     console.log "Ready to slack it ! to #{room}"

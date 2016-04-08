@@ -22,6 +22,7 @@ class GraphBuilder
       .then((pngData) ->
         FileHelper.write(pngName, pngData)
       )
+      
 
   getChart: (name, config, widgetData) ->
     chart = {}
