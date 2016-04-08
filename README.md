@@ -275,7 +275,7 @@ node ./scripts/hubot-sumologic-image-widget/gist.js
 - [x] Clean generated image file
   - [x] Auto find tmp file
   - [x] Use it
-- [ ] Style graph
+- [x] Style graph
 - [ ] Clean && Refactor a lot
 - [ ] Package it !
   - [ ] Boulangerie repo
@@ -284,6 +284,18 @@ node ./scripts/hubot-sumologic-image-widget/gist.js
   - [ ] Readme
   - [ ] Npm publish 
 
+### Learn hubot to learn
+POC on fact hubot can get a json file through slack
+Can be a link to file but it's less safer
+Finally we can brainwash hubot if we want !
+Maybe if sumologic fix their API we could use it properly
+and avoid a lot of this stuff
+
+- [ ] Add brain capabilities
+  - [ ] Import widget into hubot brain
+    - [ ] Should add or override 
+  - [ ] brainwash command
+  
 ### Learn hubot to make graphs with query
 Instead of using dashboard data, use true results from
 a custom query. The naive way should to transform query
@@ -298,17 +310,6 @@ the result could not come as quickly as a widget result
 - [ ] Add hubot behavior
 - [ ] (Depending of : Learn hubot to learn) Update or consider it
 
-### Learn hubot to learn
-POC on fact hubot can get a json file through slack
-Can be a link to file but it's less safer
-Finally we can brainwash hubot if we want !
-Maybe if sumologic fix their API we could use it properly
-and avoid a lot of this stuff
-
-- [ ] Add brain capabilities
-  - [ ] Import widget into hubot brain
-    - [ ] Should add or override 
-  - [ ] brainwash command
 
 ### Learn hubot to make beautiful graphs
 - [ ] Missing graph
