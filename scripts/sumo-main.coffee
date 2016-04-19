@@ -1,11 +1,17 @@
 WidgetFinder    = require './hubot-sumologic-image-widget/widgetFinder'
 GraphBuilder    = require './hubot-sumologic-image-widget/helpers/graphBuilder'
 HubotTeleporter = require './hubot-sumologic-image-widget/helpers/hubotTeleporter'
+HubotSumoMemory = require './hubot-sumologic-image-widget/helpers/hubotSumoMemory'
 FileHelper      = require './hubot-sumologic-image-widget/helpers/fileHelper'
 sendToSlack     = require './hubot-sumologic-image-widget/sendToSlack'
 
 module.exports = (robot) ->
   HubotTeleporter.enter(robot)
+  HubotSumoMemory.startLearning()
+
+  robot.respond /erase sumo memory/i, (result) ->
+    HubotSumoMemory.eraseMemory()
+    result.reply "Hubot forget his tricks about sumo :disappointed:"
 
   robot.respond /sumo (.*)/i, (result) ->
     widget = new WidgetFinder(result.match[1], robot)

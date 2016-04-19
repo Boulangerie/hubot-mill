@@ -276,7 +276,11 @@ node ./scripts/hubot-sumologic-image-widget/gist.js
   - [x] Auto find tmp file
   - [x] Use it
 - [x] Style graph
-- [ ] Clean && Refactor a lot
+- [x] Learn hubot to learn
+  - [x] Learn from a json file (brain used)
+  - [x] Allow to erase memory via a command
+- [ ] Clean && Tidy && Refactor if needed
+  - [ ] SendToSlack (ensure work for common cases)
 - [ ] Package it !
   - [ ] Boulangerie repo
     - [ ] Issues followings subjects
@@ -291,10 +295,13 @@ Finally we can brainwash hubot if we want !
 Maybe if sumologic fix their API we could use it properly
 and avoid a lot of this stuff
 
-- [ ] Add brain capabilities
-  - [ ] Import widget into hubot brain
-    - [ ] Should add or override 
-  - [ ] brainwash command
+#### Edit
+Some of this feature have already been done.
+But this part of this package could improved a bit more
+
+- [] Erase brain should be possible only by some users
+- [] Should list all widget available...
+- [] Should add/update/remove unitary by a command
   
 ### Learn hubot to make graphs with query
 Instead of using dashboard data, use true results from
@@ -322,4 +329,7 @@ the result could not come as quickly as a widget result
 
 ### Learn hubot to leave rocks for find his bullshit ! 
 - [ ] Implement a true logger to see what hubot do
- 
+
+### Other points
+- [ ] Find a way to delete what hubot send to slack
+- [ ] Make this part of hubot more customisable via brain of something (theme ?) 

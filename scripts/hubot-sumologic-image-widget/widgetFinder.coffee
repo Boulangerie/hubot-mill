@@ -1,11 +1,12 @@
-mapping         = require './widget-mapping.json'
 _               = require 'lodash'
 Promise         = require 'bluebird'
+HubotSumoMemory = require './helpers/hubotSumoMemory'
 SumologicHelper = require('./helpers/sumologicHelper')
 
 class WidgetFinder
   constructor: (@name, @robot) ->
-    @config = _.get(mapping, @name)
+    console.log HubotSumoMemory.getMemory()
+    @config = _.get(HubotSumoMemory.getMemory(), @name)
     if _.isUndefined(@config)
       robot.logger.error "The widget '#{@name}' isn't mapped yet !"
 
