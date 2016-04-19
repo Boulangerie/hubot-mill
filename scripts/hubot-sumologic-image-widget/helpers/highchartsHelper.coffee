@@ -1,6 +1,6 @@
 jsdom                       = require 'jsdom'
 createElementNSForHighchart = require '../createElementNSForHighchart'
-HighchartTheme              = require '../graphs/themes/darkUnica.highchartheme'
+#HighchartTheme              = require '../graphs/themes/darkUnica.highchartheme'
 
 class HighchartsHelper
   constructor: () ->
@@ -20,7 +20,7 @@ class HighchartsHelper
         }
       }
     })
-    HighchartTheme(Highcharts, doc)
+#    HighchartTheme(Highcharts, doc)
     Highcharts.chart('container', chartData)
 
     return win.document.getElementById('container').childNodes[0].innerHTML
