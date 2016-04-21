@@ -47,6 +47,7 @@ class HubotSumoMemory
     memory = @getMemory()
     _.extend(memory, jsonKnowledge)
     @setMemory(memory)
+    HubotTeleporter.out().logger.info "New tricks saved !"
 
   getMemory: () ->
     memory = HubotTeleporter
