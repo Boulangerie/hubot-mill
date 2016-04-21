@@ -9,7 +9,7 @@ module.exports = (robot) ->
   HubotTeleporter.enter(robot)
   HubotSumoMemory.startLearning()
 
-  robot.respond /erase sumo memory/i, (result) ->
+  robot.respond /lobotomize sumo/i, (result) ->
     HubotSumoMemory.eraseMemory()
     result.reply "Hubot forget his tricks about sumo :disappointed:"
 
