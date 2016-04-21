@@ -1,7 +1,7 @@
 _                 = require 'lodash'
-SvgHelper         = require '../helpers/svgHelper'
-counterTpl        = require './svgTpl/counter.tpl'
 numeral           = require 'numeral'
+counterTpl        = require './svgTpl/counter.tpl'
+SvgHelper         = require '../helpers/graphs/svgHelper'
 
 class CounterChart
   constructor: (@name, @config, @rawData) ->

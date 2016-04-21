@@ -1,5 +1,5 @@
 _                 = require 'lodash'
-HighchartsHelper  = require '../helpers/highchartsHelper'
+HighchartsHelper  = require '../helpers/highcharts/highchartsHelper'
 
 class PieChart
   constructor: (@name, @config, @rawData) ->

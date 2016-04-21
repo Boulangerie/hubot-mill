@@ -1,10 +1,10 @@
 svg2png                     = require 'svg2png'
-StackedBarChart             = require '../graphs/stackedBarChart'
-PieChart                    = require '../graphs/pieChart'
-LinesChart                  = require '../graphs/linesChart'
-TimecounterChart            = require '../graphs/timecounterChart'
-CounterChart                = require '../graphs/counterChart'
-FileHelper                  = require '../helpers/fileHelper'
+FileHelper                  = require '../utils/fileHelper'
+StackedBarChart             = require '../../graphs/stackedBarChart'
+PieChart                    = require '../../graphs/pieChart'
+LinesChart                  = require '../../graphs/linesChart'
+TimecounterChart            = require '../../graphs/timecounterChart'
+CounterChart                = require '../../graphs/counterChart'
 
 class GraphBuilder
   constructor: () ->

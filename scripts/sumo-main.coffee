@@ -1,9 +1,9 @@
-WidgetFinder    = require './hubot-sumologic-image-widget/widgetFinder'
-GraphBuilder    = require './hubot-sumologic-image-widget/helpers/graphBuilder'
-HubotTeleporter = require './hubot-sumologic-image-widget/helpers/hubotTeleporter'
-HubotSumoMemory = require './hubot-sumologic-image-widget/helpers/hubotSumoMemory'
-FileHelper      = require './hubot-sumologic-image-widget/helpers/fileHelper'
-sendToSlack     = require './hubot-sumologic-image-widget/sendToSlack'
+WidgetFinder    = require './hubot-sumologic-image-widget/helpers/sumologic/widgetFinder'
+GraphBuilder    = require './hubot-sumologic-image-widget/helpers/graphs/graphBuilder'
+HubotTeleporter = require './hubot-sumologic-image-widget/helpers/hubot-tools/hubotTeleporter'
+HubotSumoMemory = require './hubot-sumologic-image-widget/helpers/hubot-tools/hubotSumoMemory'
+FileHelper      = require './hubot-sumologic-image-widget/helpers/utils/fileHelper'
+sendToSlack     = require './hubot-sumologic-image-widget/helpers/utils/sendToSlack'
 
 module.exports = (robot) ->
   HubotTeleporter.enter(robot)

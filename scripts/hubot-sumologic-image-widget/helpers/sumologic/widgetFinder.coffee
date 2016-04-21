@@ -1,7 +1,7 @@
 _               = require 'lodash'
 Promise         = require 'bluebird'
-HubotSumoMemory = require './helpers/hubotSumoMemory'
-SumologicHelper = require('./helpers/sumologicHelper')
+HubotSumoMemory = require '../hubot-tools/hubotSumoMemory'
+SumologicHelper = require '../sumologic/sumologicHelper'
 
 class WidgetFinder
   constructor: (@name, @robot) ->

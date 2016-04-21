@@ -1,6 +1,6 @@
 _               = require 'lodash'
-HubotTeleporter = require './hubotTeleporter'
 Promise         = require 'bluebird'
+HubotTeleporter = require '../hubot-tools/hubotTeleporter'
 sumoToken       = process.env.SUMOLOGIC_TOKEN
 
 class SumologicHelper

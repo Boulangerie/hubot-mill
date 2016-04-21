@@ -1,6 +1,6 @@
 jsdom                       = require 'jsdom'
-createElementNSForHighchart = require '../createElementNSForHighchart'
-#HighchartTheme              = require '../graphs/themes/darkUnica.highchartheme'
+createElementNSForHighchart = require './createElementNSForHighchart'
+#HighchartTheme              = require '../../graphs/themes/darkUnica.highchartheme'
 
 class HighchartsHelper
   constructor: () ->

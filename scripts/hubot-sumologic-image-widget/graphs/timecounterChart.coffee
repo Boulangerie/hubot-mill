@@ -1,7 +1,7 @@
 _                 = require 'lodash'
-SvgHelper         = require '../helpers/svgHelper'
-timecounterTpl    = require './svgTpl/timecounter.tpl'
 moment            = require 'moment'
+timecounterTpl    = require './svgTpl/timecounter.tpl'
+SvgHelper         = require '../helpers/graphs/svgHelper'
 unitMappings      = require '../constants/momentTimeUnitMapping'
 
 class TimecounterChart
