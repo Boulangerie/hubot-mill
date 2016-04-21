@@ -319,6 +319,8 @@ the result could not come as quickly as a widget result
 
 
 ### Learn hubot to make beautiful graphs
+- [ ] Missing infos
+  - [ ] Time range of current graph
 - [ ] Missing graph
   - [ ] Donuts
   - [ ] Text percentage
