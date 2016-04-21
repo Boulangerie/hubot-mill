@@ -280,6 +280,7 @@ node ./scripts/hubot-sumologic-image-widget/gist.js
   - [x] Learn from a json file (brain used)
   - [x] Allow to erase memory via a command
 - [ ] Clean && Tidy && Refactor if needed
+  - [ ] Clean todo's
   - [ ] SendToSlack (ensure work for common cases)
 - [ ] Package it !
   - [ ] Boulangerie repo
@@ -332,6 +333,13 @@ the result could not come as quickly as a widget result
 ### Learn hubot to leave rocks for find his bullshit ! 
 - [ ] Implement a true logger to see what hubot do
 
+### Improve filesystem management
+Instead of using promise of folder, use it or flag, this could avoid problem 
+with promise. Other solution should be to create it at module install
+
+- [ ] Spec it :)
+
 ### Other points
 - [ ] Find a way to delete what hubot send to slack
-- [ ] Make this part of hubot more customisable via brain of something (theme ?) 
+- [ ] Make this part of hubot more customisable via brain of something (theme ?)
+

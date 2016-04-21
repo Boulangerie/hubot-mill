@@ -3,10 +3,6 @@ Promise         = require 'bluebird'
 os              = require 'os'
 fs              = Promise.promisifyAll(require('fs'))
 
-#todo : Instead of using promise of folder, use it or
-#       flag, this could avoid problem with promise
-#       Other solution should be to create it at module install
-
 class FileHelper
   constructor: () ->
     @DIR_PATH = "#{os.tmpdir()}/sumograph"
@@ -35,19 +31,16 @@ class FileHelper
   getPath: (filename) ->
     return "#{@DIR_PATH}/#{filename}"
 
-  #todo : Clean it ;)
   clean: () ->
     fs
-    .readdirAsync(@DIR_PATH)
-    .then((files) =>
-      filesPromises = []
-      console.log "Charts files will be deleted"
-      _.forEach(files, (filename) =>
-        console.log filename
-        filesPromises.push(fs.unlinkAsync("#{@getPath(filename)}"))
+      .readdirAsync(@DIR_PATH)
+      .then((files) =>
+        filesPromises = []
+        _.forEach(files, (filename) =>
+          filesPromises.push(fs.unlinkAsync("#{@getPath(filename)}"))
+        )
+        Promise.all(filesPromises)
       )
-      Promise.all(filesPromises)
-    )
 
   createDir: () ->
     fs
