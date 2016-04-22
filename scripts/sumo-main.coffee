@@ -16,6 +16,7 @@ module.exports = (robot) ->
   robot.respond /sumo (.*)/i, (result) ->
     widget = new WidgetFinder(result.match[1], robot)
     if widget.exists()
+      robot.logger.info "Sumo Graph : Start"
       result.reply "Sure ! I process it and send you this one here !"
       widget
         .getData()
@@ -27,18 +28,24 @@ module.exports = (robot) ->
         )
         .then((pngName) ->
           filePath = FileHelper.getPath(pngName)
-          sendToSlack(filePath, result.message.user.room)
+          sendToSlack(filePath, result.message)
         )
-        .then((result) ->
-          console.log "result from sendToSlack : #{result}"
-          console.log "Files will be cleaned"
+        .then((sended) ->
+          robot.logger.info "File : #{sended.filepath} sended"
+          robot.logger.info "to : #{sended.channel}/#{sended.room}"
           return FileHelper.clean()
+        )
+        .then(() ->
+          robot.logger.info "All files clear ! Graph generation done !"
+          robot.logger.info "Sumo Graph : End"
         )
         .catch((e) ->
           result.reply "Something bad happen ! Seems I can't send you your graph :disappointed:"
           robot.logger.error "Can't send the widget due to the following error"
           robot.logger.error e
+          robot.logger.info "Sumo Graph : End"
         )
     else
       result.reply "I don't know this widget sorry... :disappointed:"
+      robot.logger.info "Sumo Graph : End"
 

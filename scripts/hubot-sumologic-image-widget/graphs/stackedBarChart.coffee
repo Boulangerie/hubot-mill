@@ -29,7 +29,6 @@ class StackedBarChart
       series: @formatSeries(rawData)
     }
 
-  #@todo[jvi] : Clean this mess !
   #rawData is like raw.stackedbar.json
   #Function goal format it like highchart.stackedbar.js (series)
   formatSeries: (rawData) ->

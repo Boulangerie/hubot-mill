@@ -5,7 +5,6 @@ SumologicHelper = require '../sumologic/sumologicHelper'
 
 class WidgetFinder
   constructor: (@name, @robot) ->
-    console.log HubotSumoMemory.getMemory()
     @config = _.get(HubotSumoMemory.getMemory(), @name)
     if _.isUndefined(@config)
       robot.logger.error "The widget '#{@name}' isn't mapped yet !"

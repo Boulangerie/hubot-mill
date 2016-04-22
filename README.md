@@ -279,9 +279,9 @@ node ./scripts/hubot-sumologic-image-widget/gist.js
 - [x] Learn hubot to learn
   - [x] Learn from a json file (brain used)
   - [x] Allow to erase memory via a command
-- [ ] Clean && Tidy && Refactor if needed
-  - [ ] Clean todo's
-  - [ ] SendToSlack (ensure work for common cases)
+- [x] Clean && Tidy && Refactor if needed
+  - [x] Clean todo's
+  - [x] SendToSlack (ensure work for common cases)
 - [ ] Package it !
   - [ ] Boulangerie repo
     - [ ] Issues followings subjects
