@@ -1,5 +1,6 @@
 _               = require 'lodash'
 Promise         = require 'bluebird'
+FormData        = require 'form-data'
 HubotTeleporter = require './hubotTeleporter'
 
 class HubotSumoMemory
@@ -20,6 +21,13 @@ class HubotSumoMemory
         .then((fileContent) =>
           @learnNewTricks(fileContent)
         )
+        .then(() =>
+          @noticeUploader('success', message)
+        )
+        .catch((error) =>
+          console.log error
+          @noticeUploader('error', message, error)
+        )
 
   isKnowledgeFile: (message) ->
     message.type is "file_shared" and
@@ -37,6 +45,7 @@ class HubotSumoMemory
             body = JSON.parse(body)
           catch e
             err = "Impossible to parse json file from slack"
+
           if err
             reject(err)
           else
@@ -47,13 +56,39 @@ class HubotSumoMemory
     memory = @getMemory()
     _.extend(memory, jsonKnowledge)
     @setMemory(memory)
-    HubotTeleporter.out().logger.info "New tricks saved !"
+
+  noticeUploader: (type, message, detail) ->
+    loggerType = if type is "success" then "info" else "error"
+    userMessage = if type is "success" then "I learn a new lessons for sumologic ! Give me more !" else "I can't learn from your lesson..."
+    logMessage = if type is "success"then  "Hubot learn new tricks for sumo" else "Hubot can't learn new tricks for sumo"
+
+    HubotTeleporter.out().logger[loggerType] logMessage
+
+    if detail
+      HubotTeleporter.out().logger[loggerType] _.attempt(detail.toString)
+
+    @sendMessageToUploader(message.file.user, userMessage)
+
+  sendMessageToUploader: (uploaderID, message) ->
+    new Promise((resolve, reject) ->
+      form = new FormData()
+      form.append('token', process.env.HUBOT_SLACK_TOKEN)
+      form.append('channel', uploaderID)
+      form.append('text', message)
+
+      form.submit("https://slack.com/api/chat.postMessage", (err, res) ->
+        if err
+          reject(err)
+        else
+          resolve(true)
+      )
+    )
 
   getMemory: () ->
     memory = HubotTeleporter
       .out()
       .brain.get @BRAIN_KEY
-    
+
     if(_.isNull(memory))
       @eraseMemory()
       memory = {}

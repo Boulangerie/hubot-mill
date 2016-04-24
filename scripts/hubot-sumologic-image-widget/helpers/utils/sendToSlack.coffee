@@ -15,7 +15,6 @@ sendToSlack = (filepath, slackMessage) ->
       if err
         reject(err)
 
-      console.log filepath
       resolve({
         channel : slackMessage.rawMessage.channel
         room: slackMessage.room
