@@ -25,7 +25,6 @@ class HubotSumoMemory
           @noticeUploader('success', message)
         )
         .catch((error) =>
-          console.log error
           @noticeUploader('error', message, error)
         )
 
@@ -65,7 +64,10 @@ class HubotSumoMemory
     HubotTeleporter.out().logger[loggerType] logMessage
 
     if detail
-      HubotTeleporter.out().logger[loggerType] _.attempt(detail.toString)
+      detailMessage = _.attempt(() ->
+        detail.toString()
+      )
+      HubotTeleporter.out().logger[loggerType] detailMessage
 
     @sendMessageToUploader(message.file.user, userMessage)
 
