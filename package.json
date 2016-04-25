@@ -1,7 +1,11 @@
 {
-  "name": "hubot",
+  "name": "hubot-mill",
   "version": "0.0.0",
-  "description": "A simple helpful robot for your Company",
+  "description": "Our cool dear hubot which help us to make good things at Boulangerie",
+  "scripts": {
+    "dev": "./bin/hubot",
+    "payou-dev": "coffee ./scripts/hubot-sumologic-image-widget/main.coffee"
+  },
   "dependencies": {
     "gitio2": "^3.1.0",
     "hubot": "^2.18.0",
@@ -26,5 +30,15 @@
   "engines": {
     "node": "0.10.x",
     "npm": "2.14.7"
+  },
+  "devDependencies": {
+    "bluebird": "^3.3.4",
+    "form-data": "^0.2.0",
+    "highcharts": "^4.2.3",
+    "jsdom": "^8.1.0",
+    "moment": "^2.12.0",
+    "numeral": "^1.5.3",
+    "pn": "^1.0.0",
+    "svg2png": "^3.0.0"
   }
 }
